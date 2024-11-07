@@ -8,7 +8,6 @@ on:
 
 permissions:
   contents: write
-  actions: write
   packages: write
 
 env:
@@ -17,7 +16,12 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]  # Używamy obu systemów operacyjnych
+        configuration: [Release]
 
     steps:
     - name: Checkout
@@ -51,6 +55,15 @@ jobs:
         name: Build Artifacts
         path: ./Testowanie/bin/${{ env.CONFIGURATION }}
 
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
     - name: Create GitHub Release
       id: create_release
       uses: actions/create-release@v1
@@ -62,12 +75,34 @@ jobs:
         draft: false
         prerelease: false
 
-    - name: Upload Release Assets
+    - name: Prepare release assets (Linux)
+      run: |
+        mkdir -p release
+        cp -r ./Testowanie/bin/${{ env.CONFIGURATION }}/* release/
+        zip -r release/Testowanie-${{ env.CONFIGURATION }}.zip release/
+
+    - name: Upload Release Assets (Linux)
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./Testowanie/bin/${{ env.CONFIGURATION }}
+        asset_path: ./release/Testowanie-${{ env.CONFIGURATION }}.zip
+        asset_name: Testowanie-${{ env.CONFIGURATION }}.zip
+        asset_content_type: application/zip
+
+    - name: Prepare release assets (Windows)
+      run: |
+        mkdir -p release
+        cp -r ./Testowanie/bin/${{ env.CONFIGURATION }}/* release/
+        zip -r release/Testowanie-${{ env.CONFIGURATION }}.zip release/
+
+    - name: Upload Release Assets (Windows)
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./release/Testowanie-${{ env.CONFIGURATION }}.zip
         asset_name: Testowanie-${{ env.CONFIGURATION }}.zip
         asset_content_type: application/zip
