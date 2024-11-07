@@ -1,13 +1,14 @@
 using System.ComponentModel;
 
 namespace Testowanie;
-internal class Bmi
+public class Bmi
 {
-    static float CalculateBmi(int height, int weight)
+    public static float CalculateBmi(int height, int weight)
     {
-        return weight / (height*height);
+        float heightInMeters = height / 100f;
+        return weight / (heightInMeters*heightInMeters);
     }
-    static bool CanCardiologist(float bmi, int age)
+    public static bool CanCardiologist(float bmi)
     {
         if(bmi > 18.4 && bmi < 25)
             return true;
@@ -28,7 +29,7 @@ internal class Bmi
             if(height < 1 || age < 1 || weight < 1)
                 throw new DivideByZeroException();
             float bmi = CalculateBmi(height,weight);
-            if(CanCardiologist(bmi,age))
+            if(CanCardiologist(bmi))
                 Console.WriteLine("Twoje BMI jest prawidłowe, Kardiolog może ciebie zbadać");
             else
                 Console.WriteLine("Twoje BMI nie jest prawidłowe, kardiolog nie może ciebie zbadać");

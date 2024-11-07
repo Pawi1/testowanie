@@ -1,0 +1,22 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=6E515F99_002D065F_002D643D_002D7E94_002D9F6F9CDD64FB_002Ff_003AHuffmanTest_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1041593f_002D9f39_002D4e5c_002Dbddf_002Dce979d48eaea/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Test_CalculateBmi_ZeroHeight" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;NUnit3x::6E515F99-065F-643D-7E94-9F6F9CDD64FB::net8.0::Testowanie.Tests.BmiTest.Test_CalculateBmi_ZeroHeight&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=147edded_002Da485_002D4953_002Da0aa_002D9c3f363deb43/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Test_ValidInput_ReturnsZero" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;NUnit3x::6E515F99-065F-643D-7E94-9F6F9CDD64FB::net8.0::Testowanie.Tests.BmiTest.Test_ValidInput_ReturnsZero&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=97c44b23_002D5b18_002D45fd_002D8c34_002D05d82307c9a2/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="BmiTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;NUnit3x::6E515F99-065F-643D-7E94-9F6F9CDD64FB::net8.0::Testowanie.Tests.BmiTest&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=caed27dc_002D6843_002D46ae_002Dad02_002Db53ab38a6e9b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Test_ValidInput_ReturnsZero #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;NUnit3x::6E515F99-065F-643D-7E94-9F6F9CDD64FB::net8.0::Testowanie.Tests.BmiTest.Test_ValidInput_ReturnsZero&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
