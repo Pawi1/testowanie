@@ -1,4 +1,4 @@
-name: .NET Core Build, Test and Release
+name: .NET Core Build, Test, and Release
 
 on:
   push:
@@ -16,11 +16,12 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+
     strategy:
       matrix:
-        configuration: [Release]
-    
+        os: [ubuntu-latest, windows-latest]
+
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -30,22 +31,32 @@ jobs:
     - name: Install .NET SDK
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.0.x'
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Cache NuGet packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget
 
     - name: Restore dependencies
       run: dotnet restore Testowanie/Testowanie.csproj
 
-    - name: Build project
-      run: dotnet build Testowanie/Testowanie.csproj --configuration Release --no-restore
+    - name: Build projects
+      run: |
+        dotnet build Testowanie/Testowanie.csproj --configuration ${{ env.CONFIGURATION }} --no-restore
+        dotnet build Testowanie.Tests/Testowanie.Tests.csproj --configuration ${{ env.CONFIGURATION }} --no-restore
 
     - name: Execute unit tests
-      run: dotnet test Testowanie.Tests/Testowanie.Tests.csproj --configuration Release --no-build --verbosity normal
+      run: dotnet test Testowanie.Tests/Testowanie.Tests.csproj --configuration ${{ env.CONFIGURATION }} --no-build --verbosity normal
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
         name: Build Artifacts
-        path: ./Testowanie/bin/Release/
+        path: ./Testowanie/bin/${{ env.CONFIGURATION }}
 
   release:
     runs-on: ubuntu-latest
@@ -68,13 +79,11 @@ jobs:
         draft: false
         prerelease: false
 
-    - name: Check contents of Release directory
-      run: ls -la ./Testowanie/bin/Release/
-
-    - name: Prepare release assets
+    - name: Prepare and package release assets
       run: |
         mkdir -p release
-        cp -r ./Testowanie/bin/Release/* release/
+        cp -r ./Testowanie/bin/${{ env.CONFIGURATION }}/* release/
+        zip -r release/Testowanie-${{ env.CONFIGURATION }}.zip release/
 
     - name: Upload Release Assets
       uses: actions/upload-release-asset@v1
@@ -82,6 +91,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./release/Testowanie-${{ github.run_number }}.zip
-        asset_name: Testowanie-${{ github.run_number }}.zip
+        asset_path: ./release/Testowanie-${{ env.CONFIGURATION }}.zip
+        asset_name: Testowanie-${{ env.CONFIGURATION }}.zip
         asset_content_type: application/zip
