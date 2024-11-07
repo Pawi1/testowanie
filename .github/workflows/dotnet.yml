@@ -31,8 +31,11 @@ jobs:
     - name: Restore dependencies for Testowanie.Tests
       run: dotnet restore Testowanie.Tests/Testowanie.Tests.csproj
 
-    - name: Build projects
-      run: dotnet build Testowanie/Testowanie.csproj Testowanie.Tests/Testowanie.Tests.csproj --configuration ${{ env.CONFIGURATION }} --no-restore
+    - name: Build Testowanie project
+      run: dotnet build Testowanie/Testowanie.csproj --configuration ${{ env.CONFIGURATION }} --no-restore
+
+    - name: Build Testowanie.Tests project
+      run: dotnet build Testowanie.Tests/Testowanie.Tests.csproj --configuration ${{ env.CONFIGURATION }} --no-restore
 
     - name: Execute unit tests
       run: dotnet test Testowanie.Tests/Testowanie.Tests.csproj --configuration ${{ env.CONFIGURATION }} --no-build --verbosity normal
