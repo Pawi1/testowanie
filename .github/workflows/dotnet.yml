@@ -1,4 +1,4 @@
-name: .NET Core Build and Test
+name: .NET Core Build, Test and Release
 
 on:
   push:
@@ -45,3 +45,24 @@ jobs:
       with:
         name: Build Artifacts
         path: ./Testowanie/bin/${{ env.CONFIGURATION }}
+
+    - name: Create GitHub Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v0.1-${{ github.sha }}
+        release_name: Release v0.1-${{ github.sha }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Assets
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./Testowanie/bin/${{ env.CONFIGURATION }}
+        asset_name: Testowanie-${{ env.CONFIGURATION }}.zip
+        asset_content_type: application/zip
