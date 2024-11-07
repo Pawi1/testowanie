@@ -29,7 +29,7 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
     - name: Restore dependencies
-      run: dotnet restore --configuration ${{ matrix.configuration }}
+      run: dotnet restore
 
     - name: Build projects
       run: dotnet build Testowanie/Testowanie.csproj Testowanie.Tests/Testowanie.Tests.csproj --configuration ${{ matrix.configuration }} --no-restore
