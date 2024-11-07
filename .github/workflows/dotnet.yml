@@ -33,16 +33,10 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: Cache NuGet packages
-      uses: actions/cache@v2
-      with:
-        path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
-        restore-keys: |
-          ${{ runner.os }}-nuget
-
     - name: Restore dependencies
-      run: dotnet restore Testowanie/Testowanie.csproj
+      run: |
+        dotnet restore Testowanie/Testowanie.csproj
+        dotnet restore Testowanie.Tests/Testowanie.Tests.csproj
 
     - name: Build projects
       run: |
