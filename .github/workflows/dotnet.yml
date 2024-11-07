@@ -8,13 +8,10 @@ on:
 
 env:
   DOTNET_VERSION: '8.0.x'
+  CONFIGURATION: 'Release'
 
 jobs:
   build:
-    strategy:
-      matrix:
-        configuration: [Debug, Release]
-
     runs-on: ubuntu-latest
 
     steps:
@@ -28,17 +25,20 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: Restore dependencies
-      run: dotnet restore Testowanie/Testowanie.csproj Testowanie.Tests/Testowanie.Tests.csproj
+    - name: Restore dependencies for Testowanie
+      run: dotnet restore Testowanie/Testowanie.csproj
+
+    - name: Restore dependencies for Testowanie.Tests
+      run: dotnet restore Testowanie.Tests/Testowanie.Tests.csproj
 
     - name: Build projects
-      run: dotnet build Testowanie/Testowanie.csproj Testowanie.Tests/Testowanie.Tests.csproj --configuration ${{ matrix.configuration }} --no-restore
+      run: dotnet build Testowanie/Testowanie.csproj Testowanie.Tests/Testowanie.Tests.csproj --configuration ${{ env.CONFIGURATION }} --no-restore
 
     - name: Execute unit tests
-      run: dotnet test Testowanie.Tests/Testowanie.Tests.csproj --configuration ${{ matrix.configuration }} --no-build --verbosity normal
+      run: dotnet test Testowanie.Tests/Testowanie.Tests.csproj --configuration ${{ env.CONFIGURATION }} --no-build --verbosity normal
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
         name: Build Artifacts
-        path: ./Testowanie/bin/${{ matrix.configuration }}
+        path: ./Testowanie/bin/${{ env.CONFIGURATION }}
