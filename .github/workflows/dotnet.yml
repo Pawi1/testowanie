@@ -1,4 +1,4 @@
-name: .NET Core Build, Test, and Release
+name: Build, test, and release .csproj
 
 on:
   push:
