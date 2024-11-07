@@ -83,7 +83,7 @@ jobs:
       run: |
         zip -r release/Testowanie-${{ env.CONFIGURATION }}.zip release/
 
-    - name: Upload Release Assets
+    - name: Upload ZIP Archive
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -92,3 +92,25 @@ jobs:
         asset_path: release/Testowanie-${{ env.CONFIGURATION }}.zip
         asset_name: Testowanie-${{ env.CONFIGURATION }}.zip
         asset_content_type: application/zip
+
+    - name: Upload Windows Executable (Testowanie.exe)
+      if: matrix.os == 'windows-latest'
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: release/Testowanie.exe
+        asset_name: Testowanie.exe
+        asset_content_type: application/octet-stream
+
+    - name: Upload Linux/Mac Executable (Testowanie)
+      if: matrix.os == 'ubuntu-latest'
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: release/Testowanie
+        asset_name: Testowanie
+        asset_content_type: application/octet-stream
