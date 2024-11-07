@@ -103,6 +103,16 @@ jobs:
         asset_name: Testowanie.exe
         asset_content_type: application/octet-stream
 
+    - name: Upload Windows Executable (Testowanie.dll)
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: release/net8.0/Testowanie.dll
+        asset_name: Testowanie.dll
+        asset_content_type: application/octet-stream
+
     - name: Upload Linux/Mac Executable (Testowanie)
       uses: actions/upload-release-asset@v1
       env:
