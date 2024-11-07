@@ -1,8 +1,10 @@
+namespace Testowanie;
+
 public class Program
 {
     static void Main(string[] args)
     {
-        Huffman.Exercise2()
+        Huffman.Exercise2();
         Bmi.Exercise2();
     }
 }
