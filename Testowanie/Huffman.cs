@@ -16,4 +16,11 @@ public static class Huffman
 
         return encoded;
     }
+    public static void Exercise2()
+    {
+        Console.WriteLine("ZADANIE HUFFMAN");
+        Console.Write("Podaj ciąg do zakodowania Huffmanem: ");
+        string input = Console.ReadLine()!;
+        Console.WriteLine($"Twój Huffman: {Huffman.Encode(input)}");;
+    }
 }
