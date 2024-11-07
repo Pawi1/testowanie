@@ -49,7 +49,7 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: BuildArtifacts
+        name: BuildArtifacts-${{ env.os }}
         path: ./Testowanie/bin/${{ env.CONFIGURATION }}
 
   release:
@@ -62,11 +62,17 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Download build artifacts
+    - name: Download build artifacts (Linux)
       uses: actions/download-artifact@v3
       with:
-        name: BuildArtifacts
-        path: release
+        name: BuildArtifacts-ubuntu-latest
+        path: release-linux
+    
+    - name: Download build artifacts (Windows)
+      uses: actions/download-artifact@v3
+      with:
+        name: BuildArtifacts-windows-latest
+        path: release-windows
 
     - name: Create GitHub Release
       id: create_release
@@ -81,16 +87,27 @@ jobs:
 
     - name: Package release assets
       run: |
-        zip -r release/Testowanie-Windows.zip release/
+        zip -r testowanie-bin-windows.zip release-windows/net8.0/
+        zip -r testowanie-bin-linux.zip release-linux/net8.0/
 
-    - name: Upload ZIP Archive
+    - name: Upload ZIP Archive (Windows)
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: release/Testowanie-Windows.zip
-        asset_name: Testowanie-Windows.zip
+        asset_path: testowanie-bin-windows.zip
+        asset_name: testowanie-bin-windows.zip
+        asset_content_type: application/zip
+    
+    - name: Upload ZIP Archive (Linux)
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: testowanie-bin-linux.zip
+        asset_name: testowanie-bin-linux.zip
         asset_content_type: application/zip
 
     # - name: Upload Windows Executable (Testowanie.exe)
@@ -113,12 +130,12 @@ jobs:
     #     asset_name: Testowanie.dll
     #     asset_content_type: application/octet-stream
 
-    - name: Upload Linux/Mac Executable (Testowanie)
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: release/net8.0/Testowanie
-        asset_name: Testowanie-Linux
-        asset_content_type: application/octet-stream
+    # - name: Upload Linux/Mac Executable (Testowanie)
+    #   uses: actions/upload-release-asset@v1
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #   with:
+    #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+    #     asset_path: release/net8.0/Testowanie
+    #     asset_name: Testowanie-Linux
+    #     asset_content_type: application/octet-stream
