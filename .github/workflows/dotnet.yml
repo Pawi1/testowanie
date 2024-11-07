@@ -74,14 +74,20 @@ jobs:
         name: BuildArtifacts-windows-latest
         path: release-windows
 
+    - name: Calculate tag and release version
+      id: calculate
+      run: |
+        TAG_NAME="v0.1-$((28 - $GITHUB_RUN_NUMBER))"
+        echo "RELEASE_VER=${RELEASE_VER}" >> $GITHUB_ENV
+    
     - name: Create GitHub Release
       id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v0.1-${{ github.run_number }}
-        release_name: Release v0.1-${{ github.run_number }}
+        tag_name: ${{ env.RELEASE_VER }}
+        release_name: ${{ env.RELEASE_VER }}
         draft: false
         prerelease: false
 
