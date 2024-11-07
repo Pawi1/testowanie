@@ -77,7 +77,7 @@ jobs:
     - name: Calculate tag and release version
       id: calculate
       run: |
-        TAG_NAME="v0.1-$((28 - $GITHUB_RUN_NUMBER))"
+        RELEASE_VER="v0.1-$((28 - $GITHUB_RUN_NUMBER))"
         echo "RELEASE_VER=${RELEASE_VER}" >> $GITHUB_ENV
     
     - name: Create GitHub Release
