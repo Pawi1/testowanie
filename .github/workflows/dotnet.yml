@@ -49,7 +49,7 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: BuildArtifacts-${{ env.os }}
+        name: BuildArtifacts-${{ matrix.os }}
         path: ./Testowanie/bin/${{ env.CONFIGURATION }}
 
   release:
