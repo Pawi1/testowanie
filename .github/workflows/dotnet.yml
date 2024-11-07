@@ -94,7 +94,6 @@ jobs:
         asset_content_type: application/zip
 
     - name: Upload Windows Executable (Testowanie.exe)
-      if: matrix.os == 'windows-latest'
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -105,7 +104,6 @@ jobs:
         asset_content_type: application/octet-stream
 
     - name: Upload Linux/Mac Executable (Testowanie)
-      if: matrix.os == 'ubuntu-latest'
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
