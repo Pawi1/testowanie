@@ -12,7 +12,7 @@ public class MinimalAgeTest
         var input = new StringReader("20");
         Console.SetIn(input);
 
-        Assert.That( MinimalAge.Exercise3(), Is.EqualTo(0));
+        Assert.That( MinimalAge.Exercise5(), Is.EqualTo(0));
     }
     [Test]
     public void Test_AgeOverflow_ThrowsOverflowException()
@@ -20,7 +20,7 @@ public class MinimalAgeTest
         var input = new StringReader("256");
         Console.SetIn(input);
 
-        Assert.That(MinimalAge.Exercise3(), Is.EqualTo(1));
+        Assert.That(MinimalAge.Exercise5(), Is.EqualTo(1));
     }
     [Test]
     public void Test_InvalidInputFormat_ThrowsFormatException()
@@ -28,7 +28,7 @@ public class MinimalAgeTest
         var input = new StringReader("abc");
         Console.SetIn(input);
 
-        Assert.That(MinimalAge.Exercise3(), Is.EqualTo(1));
+        Assert.That(MinimalAge.Exercise5(), Is.EqualTo(1));
     }
 
     [Test]

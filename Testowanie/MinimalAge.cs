@@ -5,7 +5,7 @@ public class MinimalAge
     {
         return (byte)(age / 2 + 10);
     }
-    public static int Exercise3()
+    public static int Exercise5()
     {
         try
         {
