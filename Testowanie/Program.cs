@@ -6,6 +6,7 @@ public class Program
     {
         Bmi.Exercise2();
         Zad3();
+        MinimalAge.Exercise5();
     }
 
     static void Zad3()
