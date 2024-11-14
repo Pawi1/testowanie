@@ -11,7 +11,7 @@ permissions:
   packages: write
 
 env:
-  DOTNET_VERSION: '8.0.x'
+  DOTNET_VERSION: '9.0.x'
   CONFIGURATION: 'Release'
 
 jobs:
@@ -77,7 +77,7 @@ jobs:
     - name: Calculate tag and release version
       id: calculate
       run: |
-        RELEASE_VER="v0.1.$(($GITHUB_RUN_NUMBER - 31))"
+        RELEASE_VER="v0.1.$(($GITHUB_RUN_NUMBER - 32))"
         echo "RELEASE_VER=${RELEASE_VER}" >> $GITHUB_ENV
     
     - name: Create GitHub Release
